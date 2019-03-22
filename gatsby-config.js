@@ -1,11 +1,16 @@
 module.exports = {
+  pathPrefix: "/pooyagolchian.github.io",
   siteMetadata: {
-    title: `Gatsby Starter Blog`,
-    author: `Kyle Mathews`,
+    title: `Pooya Golchian`,
+    author: `Pooya Golchian`,
     description: `A starter blog demonstrating what Gatsby can do.`,
-    siteUrl: `https://gatsby-starter-blog-demo.netlify.com/`,
+    siteUrl: `http://pooyagolchian.ir`,
     social: {
-      twitter: `kylemathews`,
+      twitter: `pooyagolchian`,
+      github: `pooyagolchian`,
+      linkedin: `pooyagolchian`,
+      dribbble:`pooyagolchian`,
+      farsi:`http://pooyagolchian.ir/farsi`
     },
   },
   plugins: [
@@ -50,7 +55,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
-        //trackingId: `ADD YOUR TRACKING ID HERE`,
+        trackingId: `UA-114457345-1`,
       },
     },
     `gatsby-plugin-feed`,

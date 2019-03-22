@@ -38,11 +38,26 @@ function Bio() {
               }}
             />
             <p>
-              Written by <strong>{author}</strong> who lives and works in San
-              Francisco building useful things.
+            Written by <strong>{author}</strong>, Software Engineer with a passion to create simple, elegant, easy to use things to make this world a bit easier. <br></br>
               {` `}
-              <a href={`https://twitter.com/${social.twitter}`}>
-                You should follow him on Twitter
+              <a target='blank' href={`https://twitter.com/${social.twitter}`}>
+                 Twitter 
+              </a>
+              {`  `},  
+              <a target='blank' href={`https://github.com/${social.github}`}>
+                 Github
+              </a>
+              {`  `},    
+              <a target='blank' href={`https://linkedin.com/in/${social.linkedin}`}>
+                 Linkein
+              </a>
+              {`  `},    
+              <a target='blank' href={`https://dribbble.com/${social.dribbble}`}>
+              Dribbble
+              </a>
+              {`  `},    
+              <a target='blank' href={`${social.farsi}`}>
+              Farsi Blog
               </a>
             </p>
           </div>
@@ -51,6 +66,8 @@ function Bio() {
     />
   )
 }
+
+
 
 const bioQuery = graphql`
   query BioQuery {
@@ -66,6 +83,10 @@ const bioQuery = graphql`
         author
         social {
           twitter
+          github
+          linkedin
+          dribbble
+          farsi
         }
       }
     }
