@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Pooya Golchian]]></title><description><![CDATA[A starter blog demonstrating what Gatsby can do.]]></description><link>http://pooyagolchian.ir</link><generator>RSS for Node</generator><lastBuildDate>Fri, 22 Mar 2019 19:31:38 GMT</lastBuildDate><item><title><![CDATA[Axprint Redesign]]></title><description><![CDATA[Redesign Axprint; Bring Art and Photo to Code! I’m redesign  axprint.com . Old version of this site hosted on this URL  Old axprint . I’ve…]]></description><link>http://pooyagolchian.ir/axprint-redesign/</link><guid isPermaLink="false">http://pooyagolchian.ir/axprint-redesign/</guid><pubDate>Mon, 06 Feb 2017 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;Redesign Axprint; Bring Art and Photo to Code!&lt;/h2&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Pooya Golchian]]></title><description><![CDATA[A starter blog demonstrating what Gatsby can do.]]></description><link>http://pooyagolchian.ir</link><generator>RSS for Node</generator><lastBuildDate>Fri, 22 Mar 2019 19:43:13 GMT</lastBuildDate><item><title><![CDATA[Axprint Redesign]]></title><description><![CDATA[Redesign Axprint; Bring Art and Photo to Code! I’m redesign  axprint.com . Old version of this site hosted on this URL  Old axprint . I’ve…]]></description><link>http://pooyagolchian.ir/axprint-redesign/</link><guid isPermaLink="false">http://pooyagolchian.ir/axprint-redesign/</guid><pubDate>Mon, 06 Feb 2017 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;Redesign Axprint; Bring Art and Photo to Code!&lt;/h2&gt;
 &lt;p&gt;I’m redesign &lt;a href=&quot;http://axprint.com&quot;&gt;axprint.com&lt;/a&gt;. Old version of this site hosted on this URL &lt;a href=&quot;http://www.axprint.com:8085&quot;&gt;Old axprint&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;I’ve used very useful and modern technology for redesign axprint such as:&lt;/p&gt;
 &lt;ul&gt;
@@ -16,15 +16,49 @@
 &lt;li&gt;Create a CNAME file and upload it to your gh-pages repository.&lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;To do this, open your favourite text editor and type yout custom domain.&lt;/p&gt;
-&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre style=&quot;counter-reset: linenumber NaN&quot; class=&quot;language-text line-numbers&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;www.pooyagolchian.ir&lt;/code&gt;&lt;span aria-hidden=&quot;true&quot; class=&quot;line-numbers-rows&quot; style=&quot;white-space: normal; width: auto; left: 0;&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;www.pooyagolchian.ir&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/li&gt;
 &lt;li&gt;Go to your &lt;a href=&quot;https://www.cloudflare.com/&quot;&gt;CloudFlare account&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;Follow like this image with your repo link, For example: pooya-golchian.github.io&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;img src=&quot;./cloud-flare.png&quot; alt=&quot;Cloudflare&quot;&gt;&lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/c1cab1ba8f86f50595f106af10077268/2859b/cloud-flare.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block;  max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 42.11076280041797%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAAIABQDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAIF/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAH/2gAMAwEAAhADEAAAAd0EiT//xAAUEAEAAAAAAAAAAAAAAAAAAAAQ/9oACAEBAAEFAn//xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAEDAQE/AT//xAAVEQEBAAAAAAAAAAAAAAAAAAAAEf/aAAgBAgEBPwFH/8QAFBABAAAAAAAAAAAAAAAAAAAAEP/aAAgBAQAGPwJ//8QAGhAAAgIDAAAAAAAAAAAAAAAAAAERQSExUf/aAAgBAQABPyGH1lWNZ2z/2gAMAwEAAgADAAAAEPP/AP/EABQRAQAAAAAAAAAAAAAAAAAAABD/2gAIAQMBAT8QP//EABURAQEAAAAAAAAAAAAAAAAAAAAR/9oACAECAQE/EEP/xAAZEAACAwEAAAAAAAAAAAAAAAAAAREhwUH/2gAIAQEAAT8QVmBD6D3pP//Z&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;Cloudflare&quot;
+        title=&quot;&quot;
+        src=&quot;/static/c1cab1ba8f86f50595f106af10077268/4b3ab/cloud-flare.jpg&quot;
+        srcset=&quot;/static/c1cab1ba8f86f50595f106af10077268/f8bb1/cloud-flare.jpg 148w,
+/static/c1cab1ba8f86f50595f106af10077268/900ac/cloud-flare.jpg 295w,
+/static/c1cab1ba8f86f50595f106af10077268/4b3ab/cloud-flare.jpg 590w,
+/static/c1cab1ba8f86f50595f106af10077268/78641/cloud-flare.jpg 885w,
+/static/c1cab1ba8f86f50595f106af10077268/2859b/cloud-flare.jpg 957w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
 &lt;p&gt;Github IP adress:&lt;/p&gt;
-&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre style=&quot;counter-reset: linenumber NaN&quot; class=&quot;language-text line-numbers&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;192.30.252.153
-192.30.252.154     &lt;/code&gt;&lt;span aria-hidden=&quot;true&quot; class=&quot;line-numbers-rows&quot; style=&quot;white-space: normal; width: auto; left: 0;&quot;&gt;&lt;span&gt;&lt;/span&gt;&lt;span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;192.30.252.153
+192.30.252.154     &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;em&gt;CHEERS, your website hosted on GitHub :)&lt;/em&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[About Me]]></title><description><![CDATA[I’m Pooya Golchian  Born 1990 in tehran/IRAN. Masters of Computer & Software engineering, Islamic Azad University, 2014-2017. My Projects…]]></description><link>http://pooyagolchian.ir/about-me/</link><guid isPermaLink="false">http://pooyagolchian.ir/about-me/</guid><pubDate>Fri, 08 Aug 2014 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;I’m Pooya Golchian &lt;br /&gt;&lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;Born 1990 in tehran/IRAN.&lt;br&gt;&lt;/li&gt;
