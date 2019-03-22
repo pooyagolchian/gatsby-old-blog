@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Pooya Golchian]]></title><description><![CDATA[A starter blog demonstrating what Gatsby can do.]]></description><link>http://pooyagolchian.ir</link><generator>RSS for Node</generator><lastBuildDate>Fri, 22 Mar 2019 10:24:31 GMT</lastBuildDate><item><title><![CDATA[Axprint Redesign]]></title><description><![CDATA[Redesign Axprint; Bring Art and Photo to Code! I’m redesign  axprint.com . Old version of this site hosted on this URL  Old axprint . I’ve…]]></description><link>http://pooyagolchian.ir/axprint-redesign/</link><guid isPermaLink="false">http://pooyagolchian.ir/axprint-redesign/</guid><pubDate>Mon, 06 Feb 2017 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;Redesign Axprint; Bring Art and Photo to Code!&lt;/h2&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Pooya Golchian]]></title><description><![CDATA[A starter blog demonstrating what Gatsby can do.]]></description><link>http://pooyagolchian.ir</link><generator>RSS for Node</generator><lastBuildDate>Fri, 22 Mar 2019 10:32:15 GMT</lastBuildDate><item><title><![CDATA[Axprint Redesign]]></title><description><![CDATA[Redesign Axprint; Bring Art and Photo to Code! I’m redesign  axprint.com . Old version of this site hosted on this URL  Old axprint . I’ve…]]></description><link>http://pooyagolchian.ir/axprint-redesign/</link><guid isPermaLink="false">http://pooyagolchian.ir/axprint-redesign/</guid><pubDate>Mon, 06 Feb 2017 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;Redesign Axprint; Bring Art and Photo to Code!&lt;/h2&gt;
 &lt;p&gt;I’m redesign &lt;a href=&quot;http://axprint.com&quot;&gt;axprint.com&lt;/a&gt;. Old version of this site hosted on this URL &lt;a href=&quot;http://www.axprint.com:8085&quot;&gt;Old axprint&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;I’ve used very useful and modern technology for redesign axprint such as:&lt;/p&gt;
 &lt;ul&gt;
@@ -16,7 +16,7 @@
 &lt;li&gt;Create a CNAME file and upload it to your gh-pages repository.&lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;To do this, open your favourite text editor and type yout custom domain.&lt;/p&gt;
-&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;sh&quot;&gt;&lt;pre class=&quot;language-sh&quot;&gt;&lt;code class=&quot;language-sh&quot;&gt;www.pooyagolchian.ir&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;www.pooyagolchian.ir&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;/li&gt;
 &lt;li&gt;Go to your &lt;a href=&quot;https://www.cloudflare.com/&quot;&gt;CloudFlare account&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;Follow like this image with your repo link, For example: pooya-golchian.github.io&lt;/li&gt;
@@ -57,7 +57,7 @@
   &lt;/a&gt;
     &lt;/p&gt;
 &lt;p&gt;Github IP adress:&lt;/p&gt;
-&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;sh&quot;&gt;&lt;pre class=&quot;language-sh&quot;&gt;&lt;code class=&quot;language-sh&quot;&gt;192.30.252.153
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;192.30.252.153
 192.30.252.154 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;&lt;em&gt;CHEERS, your website hosted on GitHub :)&lt;/em&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[About Me]]></title><description><![CDATA[I’m Pooya Golchian  Born 1990 in tehran/IRAN. Masters of Computer & Software engineering, Islamic Azad University, 2014-2017. My Projects…]]></description><link>http://pooyagolchian.ir/about-me/</link><guid isPermaLink="false">http://pooyagolchian.ir/about-me/</guid><pubDate>Fri, 08 Aug 2014 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;I’m Pooya Golchian &lt;br /&gt;&lt;/h2&gt;
 &lt;ul&gt;
