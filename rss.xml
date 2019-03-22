@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Pooya Golchian]]></title><description><![CDATA[A starter blog demonstrating what Gatsby can do.]]></description><link>http://pooyagolchian.ir</link><generator>RSS for Node</generator><lastBuildDate>Fri, 22 Mar 2019 08:21:45 GMT</lastBuildDate><item><title><![CDATA[Axprint Redesign]]></title><description><![CDATA[Redesign Axprint; Bring Art and Photo to Code! I’m redesign  axprint.com . Old version of this site hosted on this URL  Old axprint . I’ve…]]></description><link>http://pooyagolchian.ir/axprint-redesign/</link><guid isPermaLink="false">http://pooyagolchian.ir/axprint-redesign/</guid><pubDate>Mon, 06 Feb 2017 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;Redesign Axprint; Bring Art and Photo to Code!&lt;/h2&gt;
+&lt;p&gt;I’m redesign &lt;a href=&quot;http://axprint.com&quot;&gt;axprint.com&lt;/a&gt;. Old version of this site hosted on this URL &lt;a href=&quot;http://www.axprint.com:8085&quot;&gt;Old axprint&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I’ve used very useful and modern technology for redesign axprint such as:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;sass - bourbon framwork,&lt;/li&gt;
+&lt;li&gt;Grunt,&lt;/li&gt;
+&lt;li&gt;FlexBox to grid system and product style mixin.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;This redesign is very clean and consider the following has:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Golden Ratio, boxes, and all style such as padding, margins, …,&lt;/li&gt;
+&lt;li&gt;ModularScale font and typography,&lt;/li&gt;
+&lt;li&gt;Use the appropriate picture page content,&lt;/li&gt;
+&lt;li&gt;Use modern design.&lt;/li&gt;
+&lt;/ul&gt;</content:encoded></item><item><title><![CDATA[Host Your Jekyll Theme on GitHub With CloudFlare]]></title><description><![CDATA[Create a CNAME file and upload it to your gh-pages repository. To do this, open your favourite text editor and type yout custom domain. Go…]]></description><link>http://pooyagolchian.ir/host-jekyll-theme-on-github/</link><guid isPermaLink="false">http://pooyagolchian.ir/host-jekyll-theme-on-github/</guid><pubDate>Fri, 01 Jul 2016 00:00:00 GMT</pubDate><content:encoded>&lt;ol&gt;
+&lt;li&gt;Create a CNAME file and upload it to your gh-pages repository.&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;To do this, open your favourite text editor and type yout custom domain.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;sh&quot;&gt;&lt;pre class=&quot;language-sh&quot;&gt;&lt;code class=&quot;language-sh&quot;&gt;www.pooyagolchian.ir&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;Go to your &lt;a href=&quot;https://www.cloudflare.com/&quot;&gt;CloudFlare account&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Follow like this image with your repo link, For example: pooya-golchian.github.io&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/6407ca283871c65c6613fa53ee148098/bd883/cf.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block;  max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 42.11076280041797%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAICAIAAAB2/0i6AAAACXBIWXMAAAsSAAALEgHS3X78AAABI0lEQVQY011QW26DQAzc4/cqPUVPUKmV+lVoBARoErKw74d3gQ6gSFHnY2WPPR6vmXPeWmuMiU8IIRij/5FaKT5yb6kdP9+Kl4/ulZVF0dR1UZTtjq7rqqoqy7Lv+/YJTYOuCiRKp9PPua3rpmJKKSLinHvvaQcCkEJI5xw9AGf0YMUtSTlGulyuzHu3LPM0TVLKlNK6rngh00ofc+d5XtAxZyEEvoOYfr9S9MP9zox1KWUpBPTwhBIduILWmxiGOWeQCJC6fbtw/Q7O3G4DIzNijJTK+4Am+KB8iGEFgbGW0gZMxyXREM/v5PVtGNia3JLxi7w+gMWQQrAdfQcY8DFEC+O8kOgjkdSWSaWl2iCfsBNKP3BUEQxc8FFMyo1CTlL9ARe7xsBeALn0AAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;cloudflare&quot;
+        title=&quot;&quot;
+        src=&quot;/static/6407ca283871c65c6613fa53ee148098/6255c/cf.png&quot;
+        srcset=&quot;/static/6407ca283871c65c6613fa53ee148098/375dc/cf.png 148w,
+/static/6407ca283871c65c6613fa53ee148098/6b157/cf.png 295w,
+/static/6407ca283871c65c6613fa53ee148098/6255c/cf.png 590w,
+/static/6407ca283871c65c6613fa53ee148098/dcf9c/cf.png 885w,
+/static/6407ca283871c65c6613fa53ee148098/bd883/cf.png 957w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;Github IP adress:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;sh&quot;&gt;&lt;pre class=&quot;language-sh&quot;&gt;&lt;code class=&quot;language-sh&quot;&gt;192.30.252.153
+192.30.252.154 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;em&gt;CHEERS, your website hosted on GitHub :)&lt;/em&gt;&lt;/p&gt;</content:encoded></item><item><title><![CDATA[About Me]]></title><description><![CDATA[I’m Pooya Golchian  Born 1990 in tehran/IRAN. Masters of Computer & Software engineering, Islamic Azad University, 2014-2017. My Projects…]]></description><link>http://pooyagolchian.ir/about-me/</link><guid isPermaLink="false">http://pooyagolchian.ir/about-me/</guid><pubDate>Fri, 08 Aug 2014 00:00:00 GMT</pubDate><content:encoded>&lt;h2&gt;I’m Pooya Golchian &lt;br /&gt;&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;Born 1990 in tehran/IRAN.&lt;br&gt;&lt;/li&gt;
+&lt;li&gt;Masters of Computer &amp;#x26; Software engineering, Islamic Azad University, 2014-2017.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1&gt;My Projects &lt;br/&gt;&lt;/h1&gt;
+&lt;h3&gt;AxPrint.com&lt;/h3&gt;
+&lt;p&gt;Senior UI developer, Drupal developer, Linux Admin at &lt;a href=&quot;http://axprint.com&quot;&gt;axprint.com&lt;/a&gt;. 5 Sep 2015 - NOW&lt;/p&gt;
+&lt;h4&gt;My project in axprint:&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Build&lt;/strong&gt; &lt;a href=&quot;http://blog.axprint.com&quot;&gt;blog.axprint.com&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Redesign&lt;/strong&gt; &lt;a href=&quot;http://axprint.com&quot;&gt;axprint.com&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Build axprint campaign landing page&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;http://axprint.com/landing/coldseason&quot;&gt;Axprint coldseason campaign&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://axprint.com/landing/pishgaman&quot;&gt;Axprint pishgaman campaign&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://axprint.com/landing/alibaba&quot;&gt;Axprint Alibaba campaign&lt;/a&gt;  &lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://axprint.com/landing/loveday94&quot;&gt;Axprint Valentine’s Day campaign&lt;/a&gt;  &lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;http://www.axprint.com/landing/fetr95/&quot;&gt;Axprint fetr95 campaign&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;Rayvarz Software Engineering Company&lt;/h3&gt;
+&lt;p&gt;UI Developer, Drupal Developer &lt;a href=&quot;http://rayvarz.com&quot;&gt;Rayvarz Software Engineering Company&lt;/a&gt; - 1year&lt;/p&gt;
+&lt;h3&gt;My project in Rayvarz:&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Build and design&lt;/strong&gt; &lt;a href=&quot;http://bpms.rayvarz.com&quot;&gt;Rayvarz BPMS Portal drupal base&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;FlyFish 2D android game&lt;/h3&gt;
+&lt;p&gt;Develope and design  2D android game, FlyFish released on IranApps &lt;a href=&quot;http://iranapps.ir/app/com.pooya.FlyFish&quot;&gt;FlyFish Game on IranApp.com Application store&lt;/a&gt;&lt;/p&gt;</content:encoded></item></channel></rss>
