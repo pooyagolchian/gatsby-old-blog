@@ -3,7 +3,7 @@ module.exports = {
   siteMetadata: {
     title: `Pooya Golchian`,
     author: `Pooya Golchian`,
-    description: `A starter blog demonstrating what Gatsby can do.`,
+    description: `Pooya Golchian, Software Engineer, Drupal,front-end, react, Javascript and UI Developer, UI/UX Designer`,
     siteUrl: `http://pooyagolchian.ir`,
     social: {
       twitter: `pooyagolchian`,
@@ -62,7 +62,7 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `Gatsby Starter Blog`,
+        name: `Pooya Golchian English Blog`,
         short_name: `GatsbyJS`,
         start_url: `/`,
         background_color: `#ffffff`,
