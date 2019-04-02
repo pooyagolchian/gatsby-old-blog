@@ -24,7 +24,7 @@ description: "My projects List"
 - Entekhab TV (React js, Redux, ElectronJs)
 - ReactNative HR, PR Application (android)
 - Server Administration
-- [PayeshPress News Agency](payeshpress.com)
+- [PayeshPress News Agency](http://payeshpress.com)
 - [Iranef](https://www.iranef.org/mag)
 - [Entekhab Group website](http://www.entekhabgroup.com)
 
