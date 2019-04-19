@@ -1,6 +1,6 @@
 ---
 title:  About me 
-description: About me 
+description: About me
 ---
 <br>
 
