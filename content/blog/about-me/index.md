@@ -1,10 +1,6 @@
 ---
-title:  About me 
-<<<<<<< HEAD
-description: About me
-=======
-description: About me 👻 
->>>>>>> parent of 863ba06... update post about me
+title:  About Me
+description: About Pooya Golchian! 
 ---
 <br>
 
