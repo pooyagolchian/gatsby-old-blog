@@ -4,7 +4,7 @@ module.exports = {
     title: `Pooya Golchian`,
     author: `Pooya Golchian`,
     description: `Pooya Golchian, Software Engineer, Drupal,front-end, react, Javascript and UI Developer, UI/UX Designer`,
-    siteUrl: `https://www.pooyagolchian.ir`,
+    siteUrl: `http://pooyagolchian.ir`,
     social: {
       twitter: `pooyagolchian`,
       github: `pooyagolchian`,

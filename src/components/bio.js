@@ -40,23 +40,23 @@ function Bio() {
             <p>
             Written by <strong>{author}</strong>, Software Engineer with a passion to create simple, elegant, easy to use things to make this world a bit easier. <br></br>
               {` `}
-              <a target="_blank" rel="noopener noreferrer" href={`https://twitter.com/${social.twitter}`}>
+              <a target='blank' href={`https://twitter.com/${social.twitter}`}>
                  Twitter 
               </a>
               {`  `},  
-              <a target="_blank" rel="noopener noreferrer" href={`https://github.com/${social.github}`}>
+              <a target='blank' href={`https://github.com/${social.github}`}>
                  Github
               </a>
               {`  `},    
-              <a target="_blank" rel="noopener noreferrer" href={`https://linkedin.com/in/${social.linkedin}`}>
+              <a target='blank' href={`https://linkedin.com/in/${social.linkedin}`}>
                  Linkein
               </a>
               {`  `},    
-              <a target="_blank" rel="noopener noreferrer" href={`https://dribbble.com/${social.dribbble}`}>
+              <a target='blank' href={`https://dribbble.com/${social.dribbble}`}>
               Dribbble
               </a>
               {`  `},    
-              <a target="_blank" rel="noopener noreferrer" href={`${social.farsi}`}>
+              <a target='blank' href={`${social.farsi}`}>
               Farsi Blog
               </a>
             </p>
@@ -94,4 +94,3 @@ const bioQuery = graphql`
 `
 
 export default Bio
-
