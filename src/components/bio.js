@@ -43,19 +43,19 @@ function Bio() {
               <a target='blank' href={`https://twitter.com/${social.twitter}`}>
                  Twitter 
               </a>
-              {`  `},  
+              {` | `}  
               <a target='blank' href={`https://github.com/${social.github}`}>
                  Github
               </a>
-              {`  `},    
+              {` | `}    
               <a target='blank' href={`https://linkedin.com/in/${social.linkedin}`}>
                  Linkein
               </a>
-              {`  `},    
+              {` | `}   
               <a target='blank' href={`https://dribbble.com/${social.dribbble}`}>
               Dribbble
               </a>
-              {`  `},    
+              {` | `}    
               <a target='blank' href={`${social.farsi}`}>
               Farsi Blog
               </a>

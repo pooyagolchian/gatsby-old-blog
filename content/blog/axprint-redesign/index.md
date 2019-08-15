@@ -6,8 +6,7 @@ description: Axprint.com website redesign
 
 ## Redesign Axprint; Bring Art and Photo to Code!
 
-I'm redesign [axprint.com](http://axprint.com). Old version of this site hosted on this URL [Old axprint](http://www.axprint.com:8085).
-
+I'm redesign [axprint.com](http://axprint.com).
 I've used very useful and modern technology for redesign axprint such as:
 
 * sass - bourbon framwork,
