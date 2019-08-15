@@ -38,7 +38,7 @@ function Bio() {
               }}
             />
             <p>
-            Written by <strong>{author}</strong>, Software Engineer with a passion to create simple, elegant, easy to use things to make this world a bit easier. <br></br>
+            Written by <strong>{author}</strong>. I'm  Software Engineer and Front-end developer with a passion to create simple, elegant, easy to use things to make this world a bit easier. <br></br>
               {` `}
               <a target='blank' href={`https://twitter.com/${social.twitter}`}>
                  Twitter 
