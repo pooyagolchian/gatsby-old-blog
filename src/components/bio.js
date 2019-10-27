@@ -18,25 +18,45 @@ function Bio() {
       render={data => {
         const { author, social } = data.site.siteMetadata
         return (
+           
+         <div>
+{/* 
+           <div>
+           <Image
+          fixed={data.coffee.childImageSharp.fixed}
+          style={{
+            marginRight: rhythm(1 / 2),
+            marginBottom: 0,
+            minWidth: 200,
+            borderRadius: `100%`,
+          }}
+          imgStyle={{
+            borderRadius: `100%`,
+          }}
+        />
+           </div> */}
+           
+        
+
           <div
             style={{
               display: `flex`,
               marginBottom: rhythm(2.5),
             }}
           >
-            <Image
-              fixed={data.avatar.childImageSharp.fixed}
-              alt={author}
-              style={{
-                marginRight: rhythm(1 / 2),
-                marginBottom: 0,
-                minWidth: 50,
-                borderRadius: `100%`,
-              }}
-              imgStyle={{
-                borderRadius: `50%`,
-              }}
-            />
+            
+          <Image
+            fixed={data.coffee.childImageSharp.fixed}
+            style={{
+              marginRight: rhythm(1 / 2),
+              marginBottom: 0,
+              minWidth: 100,
+              borderRadius: `100%`,
+            }}
+            imgStyle={{
+              borderRadius: `100%`,
+            }}
+          />
             <p>
             Written by <strong>{author}</strong>. I'm  Software Engineer and Front-end developer with a passion to create simple, elegant, easy to use things to make this world a bit easier. <br></br>
               {` `}
@@ -61,6 +81,7 @@ function Bio() {
               </a>
             </p>
           </div>
+          </div>
         )
       }}
     />
@@ -73,10 +94,17 @@ const bioQuery = graphql`
   query BioQuery {
     avatar: file(absolutePath: { regex: "/profile-pic.jpg/" }) {
       childImageSharp {
-        fixed(width: 50, height: 50) {
+        fixed(width: 70, height: 70) {
           ...GatsbyImageSharpFixed
         }
       }
+    }
+      coffee: file(absolutePath: { regex: "/coffee.png/" }) {
+        childImageSharp {
+          fixed(width: 100, height: 100) {
+            ...GatsbyImageSharpFixed
+          }
+        }
     }
     site {
       siteMetadata {
