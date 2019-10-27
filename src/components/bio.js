@@ -47,6 +47,7 @@ function Bio() {
             
           <Image
             fixed={data.coffee.childImageSharp.fixed}
+            alt={author}
             style={{
               marginRight: rhythm(1 / 2),
               marginBottom: 0,
