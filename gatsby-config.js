@@ -9,11 +9,13 @@ module.exports = {
       twitter: `pooyagolchian`,
       github: `pooyagolchian`,
       linkedin: `pooyagolchian`,
-      dribbble:`pooyagolchian`,
-      farsi:`http://pooyagolchian.ir/farsi`
+      dribbble: `pooyagolchian`,
+      farsi: `http://pooyagolchian.ir/farsi`,
     },
   },
   plugins: [
+    `gatsby-theme-overreacted-toggle`,
+    `gatsby-plugin-sass`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -42,8 +44,8 @@ module.exports = {
             resolve: "gatsby-remark-external-links",
             options: {
               target: "_blank",
-              rel: "nofollow"
-            }
+              rel: "nofollow",
+            },
           },
           {
             resolve: `gatsby-remark-responsive-iframe`,

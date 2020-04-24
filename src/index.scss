@@ -1,0 +1,17 @@
+.footer-social {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  li {
+    padding: 0 0.3em;
+    text-decoration: none;
+    a {
+      text-decoration: none;
+      color: #666666;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+}
