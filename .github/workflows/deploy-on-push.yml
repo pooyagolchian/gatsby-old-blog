@@ -1,15 +1,20 @@
-name: Gatsby Publish
+name: Gatsby Build and Deploy to GitHub Pages on Push
 
 on:
-  push:
-    branches:
-      - develop
+push:
+  branches:
+    - develop
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: enriikke/gatsby-gh-pages-action@v2
-        with:
-          access-token: ${{ secrets.ACCESS_TOKEN }}
+build-and-deploy:
+  runs-on: ubuntu-latest
+  steps:
+    - name: Checkout
+      uses: actions/checkout@master
+    - name: Build and Deploy
+      uses: JamesIves/github-pages-deploy-action@master
+      env:
+        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        BRANCH: master
+        FOLDER: public
+        BUILD_SCRIPT: yarn && yarn run build
