@@ -10,13 +10,11 @@ This website configure with wepack and dotnet core 2.2.
 
 ### Step-1- Add CDN
 
-`
-
+```html
 <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-messaging.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-analytics.js"></script>
-
-`
+```
 
 ## Step-2- Config script
 
