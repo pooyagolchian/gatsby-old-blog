@@ -5,10 +5,10 @@ date: "2020-04-25"
 
 ### Configuration firebase push notification with CDN
 
-At first you add CDN script in html file. I'm using this libiraries in my vue.js application in Yiata website.
-This website configure with wepack and dotnet core 2.2.
+At first, you add a CDN script in the HTML file. I'm using this library in my vue.js application on the Yiata website.
+This website configures with Webpack and dotnet core 2.2.
 
-### Step-1- Add CDN
+### Step-1-Add CDN
 
 ```html
 <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js"></script>
@@ -16,9 +16,9 @@ This website configure with wepack and dotnet core 2.2.
 <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-analytics.js"></script>
 ```
 
-## Step-2- Config script
+## Step-2-Config script
 
-After add this script at the end of body tags you are adding the firebase configs like below:
+After adding this script at the end of body tags you are adding the firebase configs like below:
 
 ```javascript
 const firebaseConfig = {
@@ -51,9 +51,9 @@ const firebaseConfig = {
             });
 ```
 
-### Step-3- Add firebase service worker
+### Step-3-Add firebase service worker
 
-For initial firebase configuration and connect to this service, You must add service worker js file in root of your project.
+For initial firebase configuration and connect to this service, You must add service worker js file in the root of your project.
 
 ```javascript
 importScripts("https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js")
@@ -88,9 +88,9 @@ messaging.setBackgroundMessageHandler(payload => {
 })
 ```
 
-### Step-4- Add manifest json file
+### Step-4-Add manifest json file
 
-At the last step You must be add SENDER_ID to manifest.json file
+At the last step, You must be added SENDER_ID to manifest.json file
 
 ```javascript
 {
@@ -99,6 +99,6 @@ At the last step You must be add SENDER_ID to manifest.json file
 
 ```
 
-### Step-5- Use localStrorage to save notifications
+### Step-5-Use localStrorage to save notifications
 
 Now you can read the local storage with getItem method to get nofications from local storage. You can set expiration date for your local storage (for example: 1 month)
