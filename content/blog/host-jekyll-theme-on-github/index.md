@@ -13,7 +13,7 @@ www.pooyagolchian.ir
 3. Go to your [CloudFlare account](https://www.cloudflare.com/)
 4. Follow like this image with your repo link, For example: pooya-golchian.github.io
 
-![Cloudflare](/assets/cloud-flare.jpg)
+![Cloudflare](cloud-flare.jpg)
 
 Github IP adress:
 

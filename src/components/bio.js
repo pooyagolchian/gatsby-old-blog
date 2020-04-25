@@ -39,14 +39,11 @@ function Bio() {
                   borderRadius: `100%`,
                 }}
               />
-              <div
-                style={{
-                  justifyContent: `center`,
-                  display: `flex`,
-                  alignItems: `center`,
-                }}
-              >
-                personal blog.
+              <div>
+                <div>
+                  <strong>{author}</strong> personal blog.{" "}
+                </div>
+                <div>I'm Frontend developer and DevOps engineer.</div>
               </div>
             </div>
           </div>
@@ -60,7 +57,7 @@ const bioQuery = graphql`
   query BioQuery {
     avatar: file(absolutePath: { regex: "/profile-pic.jpg/" }) {
       childImageSharp {
-        fixed(width: 70, height: 70) {
+        fixed(width: 50, height: 50) {
           ...GatsbyImageSharpFixed
         }
       }
