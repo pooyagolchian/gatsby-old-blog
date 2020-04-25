@@ -58,11 +58,11 @@
   },
   "scripts": {
     "build": "gatsby build",
-    "develop": "gatsby develop",
-    "deploy": "gatsby build && gh-pages -d public -b master",
+    "develop": "gatsby clean && gatsby develop",
+    "deploy": "gatsby clean && gatsby build && gh-pages -d public -b master",
     "format": "prettier --write src/**/*.{js,jsx}",
-    "start": "npm run develop",
-    "serve": "gatsby serve",
+    "start": "gatsby clean && npm run develop",
+    "serve": "gatsby clean && gatsby serve",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\""
   }
 }
