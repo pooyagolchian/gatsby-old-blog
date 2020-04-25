@@ -1,16 +1,15 @@
+name: Gatsby Publish
+
 on:
   push:
     branches:
       - develop
+
 jobs:
-  deploy:
-    runs-on: ubuntu-18.04
+  build:
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@develop
-      - run: npm install;npm run build
-      - name: Deploy
-        uses: pooyagolchian/pooyagolchian.github.io@develop
+      - uses: actions/checkout@v1
+      - uses: pooyagolchian/pooyagolchian.github.io@v2
         with:
-          github_token: ${{ secrets.ACCESS_TOKEN }}
-          publish_dir: ./public
-          publish_branch: master
+          access-token: ${{ secrets.ACCESS_TOKEN }}
