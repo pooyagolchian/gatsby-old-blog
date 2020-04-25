@@ -2,9 +2,8 @@ name: Gatsby Build and Deploy to GitHub Pages on Push
 
 on:
 push:
-  branches:
-    - develop
-    - master
+  release:
+    types: [published]
 jobs:
 build-and-deploy:
   runs-on: ubuntu-latest
@@ -13,7 +12,7 @@ build-and-deploy:
       uses: actions/checkout@develop
 
     - name: Build and Deploy
-      uses: pooyagolchian/pooyagolchian.github.io@master
+      uses: pooyagolchian/pooyagolchian.github.io@develop
       env:
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         BRANCH: develop
