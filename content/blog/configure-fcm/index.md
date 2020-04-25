@@ -1,5 +1,5 @@
 ---
-title: Configure firebase push notofication (FCM) with google cloud messaging
+title: Configure Firebase Cloud Messaging (FCM)
 date: "2020-04-25"
 ---
 
