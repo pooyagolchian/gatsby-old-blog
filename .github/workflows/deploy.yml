@@ -1,0 +1,21 @@
+name: Gatsby Build and Deploy to GitHub Pages on Push
+
+on:
+push:
+  branches:
+    - develop
+
+jobs:
+build-and-deploy:
+  runs-on: ubuntu-latest
+  steps:
+    - name: Checkout
+      uses: actions/checkout@develop
+
+    - name: Build and Deploy
+      uses: pooyagolchian/pooyagolchian.github.io@develop
+      env:
+        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        BRANCH: develop
+        FOLDER: public
+        BUILD_SCRIPT: gatsby build && gh-pages -d public -b master
