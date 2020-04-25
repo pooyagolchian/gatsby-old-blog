@@ -4,9 +4,8 @@ on:
 push:
   branches:
     - develop
-
-  paths:
-    - "**.js"
+  tags:
+    - "*"
 jobs:
 build-and-deploy:
   runs-on: ubuntu-latest
