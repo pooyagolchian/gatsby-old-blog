@@ -18,4 +18,4 @@ build-and-deploy:
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         BRANCH: develop
         FOLDER: public
-        BUILD_SCRIPT: gatsby build && gh-pages -d public -b master
+        BUILD_SCRIPT: npm install && npm run build
