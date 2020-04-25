@@ -4,6 +4,7 @@ on:
 push:
   branches:
     - develop
+    - master
 jobs:
 build-and-deploy:
   runs-on: ubuntu-latest
@@ -12,7 +13,7 @@ build-and-deploy:
       uses: actions/checkout@develop
 
     - name: Build and Deploy
-      uses: pooyagolchian/pooyagolchian.github.io@develop
+      uses: pooyagolchian/pooyagolchian.github.io@master
       env:
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         BRANCH: develop
