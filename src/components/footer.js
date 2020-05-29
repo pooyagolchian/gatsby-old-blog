@@ -11,15 +11,6 @@ function Footer() {
           <div>
             <ul className="footer-social">
               <li>
-                <a
-                  target="blank"
-                  href={`https://twitter.com/${social.twitter}`}
-                >
-                  Twitter
-                </a>
-              </li>
-
-              <li>
                 <a target="blank" href={`https://github.com/${social.github}`}>
                   Github
                 </a>
@@ -59,7 +50,6 @@ const socialQuery = graphql`
     site {
       siteMetadata {
         social {
-          twitter
           github
           linkedin
           dribbble
