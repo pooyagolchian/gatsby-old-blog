@@ -20,8 +20,8 @@ When you have a server and you want to have a VPN on the server. You can use thi
   [optional] sudo make install-config (installs proxychains.conf)
 ```
 
-3. Configure proxychanins4 from `/etc/proxychains.conf`
-4. Comment Socks4 and add Socks5 like blow:
+1. Configure proxychanins4 from `/etc/proxychains.conf`
+2. Comment Socks4 and add Socks5 like blow:
 
 ```bash
 socks5 127.0.0.1 1080
