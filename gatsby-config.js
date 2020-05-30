@@ -72,10 +72,10 @@ module.exports = {
       resolve: `gatsby-plugin-manifest`,
       options: {
         name: `Pooya Golchian English Blog`,
-        short_name: `GatsbyJS`,
+        short_name: `Pooya Golchian`,
         start_url: `/`,
         background_color: `#ffffff`,
-        theme_color: `#663399`,
+        theme_color: `#d87171`,
         display: `minimal-ui`,
         icon: `content/assets/gatsby-icon.png`,
       },

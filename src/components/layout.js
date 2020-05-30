@@ -89,13 +89,7 @@ class Layout extends React.Component {
         >
           <Footer />
           <div>
-            <a
-              style={{
-                color: `#666`,
-              }}
-              target="blank"
-              href={`https://pooyagolchian.github.io/rss.xml`}
-            >
+            <a target="blank" href={`https://pooyagolchian.github.io/rss.xml`}>
               rss
             </a>
           </div>

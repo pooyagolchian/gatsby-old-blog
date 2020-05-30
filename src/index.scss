@@ -8,10 +8,13 @@
     text-decoration: none;
     a {
       text-decoration: none;
-      color: #666666;
       &:hover {
         text-decoration: none;
       }
     }
   }
+}
+
+a {
+  color: #d87171;
 }
