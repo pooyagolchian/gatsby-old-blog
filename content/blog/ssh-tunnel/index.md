@@ -1,5 +1,5 @@
 ---
-title: Setup and configuration SSH tunnel and create poorman vpn on Linux, MacOs, Windows 10
+title: Setup and configuration SSH tunnel and create the poor man's VPN on Linux, MacOs, Windows 10
 date: "2020-05-31"
 ---
 
