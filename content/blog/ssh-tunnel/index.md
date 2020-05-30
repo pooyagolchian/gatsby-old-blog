@@ -10,8 +10,8 @@ When you have a server and you want to have a VPN on the server. You can use thi
 
 ## Configure The Poor Man's VPN (Tunnel over SSH) on MacOS, Linux
 
-1.Install and configuration proxychains4 (Next generation) from [github][1]
-2.Befor this configuration, You must be install `gcc and make`
+1. Install and configuration proxychains4 (Next generation) from [github][1]
+2. Befor this configuration, You must be install `gcc and make`
 
 ```bash
  ./configure --prefix=/usr --sysconfdir=/etc
