@@ -15,6 +15,7 @@ module.exports = {
   },
   plugins: [
     `gatsby-theme-overreacted-toggle`,
+    `gatsby-plugin-theme-ui`,
     `gatsby-plugin-sass`,
     {
       resolve: `gatsby-source-filesystem`,
