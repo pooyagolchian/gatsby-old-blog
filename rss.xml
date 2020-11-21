@@ -1,0 +1,577 @@
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[Pooya Golchian]]></title><description><![CDATA[Pooya Golchian, Software Engineer, Drupal,front-end, react, Javascript and UI Developer, UI/UX Designer]]></description><link>http://pooyagolchian.ir</link><generator>GatsbyJS</generator><lastBuildDate>Sat, 21 Nov 2020 08:47:32 GMT</lastBuildDate><item><title><![CDATA[Arangodb install last version and configuration and backup and restore from Amazon AWS]]></title><description><![CDATA[Intro I use Shell script for all steps to automate Arangodb backup and update from a to z! Install last verison of Arangodb on Ubuntu 18.0…]]></description><link>http://pooyagolchian.ir/arangodb-devops/</link><guid isPermaLink="false">http://pooyagolchian.ir/arangodb-devops/</guid><pubDate>Wed, 22 Jul 2020 00:00:00 GMT</pubDate><content:encoded>&lt;h3&gt;Intro&lt;/h3&gt;
+&lt;p&gt;I use Shell script for all steps to automate Arangodb backup and update from a to z!&lt;/p&gt;
+&lt;h3&gt;Install last verison of Arangodb on Ubuntu 18.04&lt;/h3&gt;
+&lt;p&gt;For installation, you should visit the Arango website to check the last version of this database.
+Now the last version is &lt;code class=&quot;language-text&quot;&gt;3.6.5-1&lt;/code&gt;.
+For installing this version and configuration web interface run the below sh file on your server,
+in this example, I’m testing this script on the AWS EC2 server.&lt;/p&gt;
+&lt;h4&gt;WARNING!&lt;/h4&gt;
+&lt;p&gt;You should stop arangodb3 and turn your application into maintenance mode!&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token shebang important&quot;&gt;#!/bin/bash&lt;/span&gt;
+&lt;span class=&quot;token function&quot;&gt;sudo&lt;/span&gt; systemctl stop arangodb3.service
+&lt;span class=&quot;token function&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;cp&lt;/span&gt; /etc/arangodb3/ ~/arango-config-backup
+&lt;span class=&quot;token function&quot;&gt;curl&lt;/span&gt; -OL https://download.arangodb.com/arangodb36/DEBIAN/Release.key
+&lt;span class=&quot;token function&quot;&gt;sudo&lt;/span&gt; apt-key &lt;span class=&quot;token function&quot;&gt;add&lt;/span&gt; - &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt; Release.key
+&lt;span class=&quot;token builtin class-name&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;deb https://download.arangodb.com/arangodb36/DEBIAN/ /&apos;&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;tee&lt;/span&gt; /etc/apt/sources.list.d/arangodb.list
+&lt;span class=&quot;token function&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;apt-get&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;install&lt;/span&gt; apt-transport-https
+&lt;span class=&quot;token function&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;apt-get&lt;/span&gt; update
+&lt;span class=&quot;token function&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;apt-get&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;token assign-left variable&quot;&gt;arangodb3&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;3.6&lt;/span&gt;.5-1
+&lt;span class=&quot;token function&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;sed&lt;/span&gt; -i &lt;span class=&quot;token string&quot;&gt;&quot;s+endpoint = tcp://127.0.0.1:8529+endpoint = tcp://0.0.0.0:8529+g&quot;&lt;/span&gt; /etc/arangodb3/arangod.conf
+&lt;span class=&quot;token function&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;sed&lt;/span&gt; -i &lt;span class=&quot;token string&quot;&gt;&quot;s+endpoint = tcp://127.0.0.1:8529+endpoint = tcp://0.0.0.0:8529+g&quot;&lt;/span&gt; /etc/arangodb3/arangosh.conf
+&lt;span class=&quot;token function&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;sed&lt;/span&gt; -i &lt;span class=&quot;token string&quot;&gt;&quot;s+endpoint = tcp://127.0.0.1:8529+endpoint = tcp://0.0.0.0:8529+g&quot;&lt;/span&gt; /etc/arangodb3/foxx-manager.conf
+&lt;span class=&quot;token function&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;sed&lt;/span&gt; -i &lt;span class=&quot;token string&quot;&gt;&quot;s/#queues = true/queues = true/g&quot;&lt;/span&gt; /etc/arangodb3/arangod.conf
+&lt;span class=&quot;token function&quot;&gt;sudo&lt;/span&gt; systemctl &lt;span class=&quot;token builtin class-name&quot;&gt;enable&lt;/span&gt; arangodb3.service
+&lt;span class=&quot;token function&quot;&gt;sudo&lt;/span&gt; systemctl start arangodb3.service
+&lt;span class=&quot;token function&quot;&gt;sudo&lt;/span&gt; systemctl status arangodb3.service
+&lt;span class=&quot;token function&quot;&gt;sudo&lt;/span&gt; sysctl -w &lt;span class=&quot;token string&quot;&gt;&quot;vm.max_map_count=1024000&quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;Arangodb backup and upload to s3&lt;/h3&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token shebang important&quot;&gt;#!/bin/sh&lt;/span&gt;
+&lt;span class=&quot;token assign-left variable&quot;&gt;NOWDATE&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token variable&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;date&lt;/span&gt; +%Y-%m-%d&lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;token assign-left variable&quot;&gt;LASTDATE&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token variable&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;$(&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;date&lt;/span&gt; +%Y-%m-%d --date&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;1 week ago&apos;&lt;/span&gt;&lt;span class=&quot;token variable&quot;&gt;)&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;token assign-left variable&quot;&gt;DIRNAME&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;Your directory name&quot;&lt;/span&gt;
+&lt;span class=&quot;token assign-left variable&quot;&gt;BUCKETNAME&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;Your bucketname in S3&quot;&lt;/span&gt;
+&lt;span class=&quot;token assign-left variable&quot;&gt;DATABASENAME&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;Your database name&quot;&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt; -d &lt;span class=&quot;token string&quot;&gt;&quot;/home/ubuntu/backup/&lt;span class=&quot;token variable&quot;&gt;$DIRNAME&lt;/span&gt;&quot;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;then&lt;/span&gt;
+    &lt;span class=&quot;token builtin class-name&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Directory /home/ubuntu/backup/&lt;span class=&quot;token variable&quot;&gt;$DIRNAME&lt;/span&gt; exists.&quot;&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;else&lt;/span&gt;
+    &lt;span class=&quot;token builtin class-name&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Error: Directory /home/ubuntu/backup/&lt;span class=&quot;token variable&quot;&gt;$DIRNAME&lt;/span&gt; does not exists.&quot;&lt;/span&gt;
+    &lt;span class=&quot;token variable&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;mkdir&lt;/span&gt; -p /home/ubuntu/backup/$DIRNAME&lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;&lt;/span&gt;
+    &lt;span class=&quot;token builtin class-name&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;FOLDER &lt;span class=&quot;token variable&quot;&gt;$DIRNAME&lt;/span&gt; CREATED!&quot;&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;fi&lt;/span&gt;
+arangodump --server.endpoint tcp://127.0.0.1:8529 --server.username root --server.password &lt;span class=&quot;token string&quot;&gt;&apos;as&amp;amp;m0ssJM1299&apos;&lt;/span&gt; --server.database &lt;span class=&quot;token variable&quot;&gt;$DATABASENAME&lt;/span&gt; --output-directory &lt;span class=&quot;token string&quot;&gt;&quot;/home/ubuntu/backup/&lt;span class=&quot;token variable&quot;&gt;$DIRNAME&lt;/span&gt;/&quot;&lt;/span&gt; --compress-output --overwrite &lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;
+&lt;span class=&quot;token function&quot;&gt;tar&lt;/span&gt; -czvf /home/ubuntu/backup/&lt;span class=&quot;token variable&quot;&gt;$NOWDATE&lt;/span&gt;-&lt;span class=&quot;token variable&quot;&gt;$DATABASENAME&lt;/span&gt;-backup.tar.gz -C /home/ubuntu/backup/&lt;span class=&quot;token variable&quot;&gt;$DIRNAME&lt;/span&gt; &lt;span class=&quot;token builtin class-name&quot;&gt;.&lt;/span&gt;
+aws s3 &lt;span class=&quot;token function&quot;&gt;cp&lt;/span&gt; /home/ubuntu/backup/&lt;span class=&quot;token variable&quot;&gt;$NOWDATE&lt;/span&gt;-&lt;span class=&quot;token variable&quot;&gt;$DATABASENAME&lt;/span&gt;-backup.tar.gz  s3://&lt;span class=&quot;token variable&quot;&gt;$BUCKETNAME&lt;/span&gt;/dbbackup/
+aws s3 &lt;span class=&quot;token function&quot;&gt;rm&lt;/span&gt; s3://&lt;span class=&quot;token variable&quot;&gt;$BUCKETNAME&lt;/span&gt;/dbbackup/&lt;span class=&quot;token variable&quot;&gt;$LASTDATE&lt;/span&gt;-&lt;span class=&quot;token variable&quot;&gt;$DATABASENAME&lt;/span&gt;-backup.tar.gz
+&lt;span class=&quot;token function&quot;&gt;rm&lt;/span&gt; -rf /home/ubuntu/backup/&lt;span class=&quot;token variable&quot;&gt;$NOWDATE&lt;/span&gt;-&lt;span class=&quot;token variable&quot;&gt;$DATABASENAME&lt;/span&gt;-backup.tar.gz
+&lt;span class=&quot;token function&quot;&gt;rm&lt;/span&gt; -rf  /home/ubuntu/backup/&lt;span class=&quot;token variable&quot;&gt;$DIRNAME&lt;/span&gt;/*&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;Arangodb restore and download from s3&lt;/h3&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token shebang important&quot;&gt;#!/bin/sh&lt;/span&gt;
+&lt;span class=&quot;token assign-left variable&quot;&gt;DIRNAME&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;Your directory name&quot;&lt;/span&gt;
+&lt;span class=&quot;token assign-left variable&quot;&gt;BUCKETNAME&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;Your bucket name in S3&quot;&lt;/span&gt;
+&lt;span class=&quot;token assign-left variable&quot;&gt;DATABASENAME&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;Your database name&quot;&lt;/span&gt;
+&lt;span class=&quot;token builtin class-name&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Please enter file date (ONLY DATE LIKE 2020-07-16):&quot;&lt;/span&gt;
+&lt;span class=&quot;token builtin class-name&quot;&gt;read&lt;/span&gt; FILE_NAME
+&lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt; -d &lt;span class=&quot;token string&quot;&gt;&quot;/home/ubuntu/backup/&lt;span class=&quot;token variable&quot;&gt;$DIRNAME&lt;/span&gt;&quot;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;then&lt;/span&gt;
+    &lt;span class=&quot;token builtin class-name&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Directory /home/ubuntu/backup/&lt;span class=&quot;token variable&quot;&gt;$DIRNAME&lt;/span&gt; exists.&quot;&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;else&lt;/span&gt;
+    &lt;span class=&quot;token builtin class-name&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Error: Directory /home/ubuntu/backup/&lt;span class=&quot;token variable&quot;&gt;$DIRNAME&lt;/span&gt; does not exists.&quot;&lt;/span&gt;
+    &lt;span class=&quot;token builtin class-name&quot;&gt;exit&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Please backup database with shell script&quot;&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;fi&lt;/span&gt;
+aws s3 &lt;span class=&quot;token function&quot;&gt;cp&lt;/span&gt;  s3://&lt;span class=&quot;token variable&quot;&gt;$BUCKETNAME&lt;/span&gt;/dbbackup/&lt;span class=&quot;token variable&quot;&gt;$FILE_NAME&lt;/span&gt;-&lt;span class=&quot;token variable&quot;&gt;$DATABASENAME&lt;/span&gt;-backup.tar.gz  /home/ubuntu/backup/
+&lt;span class=&quot;token function&quot;&gt;tar&lt;/span&gt; -xzvf /home/ubuntu/backup/&lt;span class=&quot;token variable&quot;&gt;$FILE_NAME&lt;/span&gt;-&lt;span class=&quot;token variable&quot;&gt;$DATABASENAME&lt;/span&gt;-backup.tar.gz -C /home/ubuntu/backup/&lt;span class=&quot;token variable&quot;&gt;$DIRNAME&lt;/span&gt;
+arangorestore --server.endpoint tcp://127.0.0.1:8529 --server.username root --server.password &lt;span class=&quot;token string&quot;&gt;&apos;as&amp;amp;m0ssJM1299&apos;&lt;/span&gt; --server.database &lt;span class=&quot;token variable&quot;&gt;$DATABASENAME&lt;/span&gt; --input-directory &lt;span class=&quot;token string&quot;&gt;&quot;/home/ubuntu/backup/&lt;span class=&quot;token variable&quot;&gt;$DIRNAME&lt;/span&gt;&quot;&lt;/span&gt; --create-database
+&lt;span class=&quot;token function&quot;&gt;rm&lt;/span&gt; -rf /home/ubuntu/backup/&lt;span class=&quot;token variable&quot;&gt;$FILE_NAME&lt;/span&gt;-&lt;span class=&quot;token variable&quot;&gt;$DATABASENAME&lt;/span&gt;-backup.tar.gz
+&lt;span class=&quot;token function&quot;&gt;rm&lt;/span&gt; -rf  /home/ubuntu/backup/&lt;span class=&quot;token variable&quot;&gt;$DIRNAME&lt;/span&gt;/*&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;Add systemd service for life!&lt;/h3&gt;
+&lt;p&gt;It’s a really good feature to automated tasks with system service to manage all services separately.&lt;/p&gt;
+&lt;p&gt;1- First you go to &lt;code class=&quot;language-text&quot;&gt;/etc/systemd/system&lt;/code&gt; and add &lt;code class=&quot;language-text&quot;&gt;backup.servive&lt;/code&gt; and &lt;code class=&quot;language-text&quot;&gt;backup.timer&lt;/code&gt;
+2- Backup service file for the run backup script
+3- Timer for the run backup script and specific time.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;Unit&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;token assign-left variable&quot;&gt;Description&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;Schedule to run backup &lt;span class=&quot;token function&quot;&gt;service&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;Timer&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;token assign-left variable&quot;&gt;OnCalendar&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;
+&lt;span class=&quot;token assign-left variable&quot;&gt;OnCalendar&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;*-*-* 02:30:00
+&lt;span class=&quot;token assign-left variable&quot;&gt;Unit&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;backup.service
+&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;Install&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;token assign-left variable&quot;&gt;WantedBy&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;multi-user.target&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;Unit&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;token assign-left variable&quot;&gt;Description&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;Run sportbook  Arango DB backup script &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;Service&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;Service&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;token assign-left variable&quot;&gt;ExecStart&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;/bin/bash /home/ubuntu/backup/backup.sh&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;After creating these two files in the system you must restart the service like below:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;sudo systemctl daemon-reload
+sudo systemctl start backup.time
+sudo systemctl status backup.time&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now you have an automatic backup system with a timer on your server.&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Setup and configuration SSH tunnel and create the poor man's VPN on Linux, MacOs, Windows 10]]></title><description><![CDATA[When you have a server and you want to have a VPN on the server. You can use this method. The following concepts are required to install…]]></description><link>http://pooyagolchian.ir/ssh-tunnel/</link><guid isPermaLink="false">http://pooyagolchian.ir/ssh-tunnel/</guid><pubDate>Sun, 31 May 2020 00:00:00 GMT</pubDate><content:encoded>&lt;p&gt;When you have a server and you want to have a VPN on the server. You can use this method. The following concepts are required to install.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;SSH&lt;/li&gt;
+&lt;li&gt;Software or CLI to tunnel all internet in your device&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2&gt;Configure The Poor Man’s VPN (Tunnel over SSH) on MacOS, Linux&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;Install and configuration proxychains4 (Next generation) from &lt;a href=&quot;https://github.com/rofl0r/proxychains-ng&quot; target=&quot;_blank&quot; rel=&quot;nofollow&quot;&gt;github&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Befor this configuration, You must be install &lt;code class=&quot;language-text&quot;&gt;gcc and make&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt; ./configure --prefix&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;/usr --sysconfdir&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;/etc
+  &lt;span class=&quot;token function&quot;&gt;make&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;optional&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;make&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;install&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;optional&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;sudo&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;make&lt;/span&gt; install-config &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;installs proxychains.conf&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;ol&gt;
+&lt;li&gt;Configure proxychanins4 from &lt;code class=&quot;language-text&quot;&gt;/etc/proxychains.conf&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Comment Socks4 and add Socks5 like blow:&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;socks5 &lt;span class=&quot;token number&quot;&gt;127.0&lt;/span&gt;.0.1 &lt;span class=&quot;token number&quot;&gt;1080&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;ol start=&quot;5&quot;&gt;
+&lt;li&gt;You must be ssh to server like below(for Linux and MasOS):&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token function&quot;&gt;ssh&lt;/span&gt; -f -N -D &lt;span class=&quot;token number&quot;&gt;1080&lt;/span&gt; admin@server1.example.com&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;ol start=&quot;6&quot;&gt;
+&lt;li&gt;You can check the proxy like &lt;code class=&quot;language-text&quot;&gt;curl -I twitter.com&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;I’m wrote bash file to connect and disconnect to ssh in the MacOS. &lt;a href=&quot;https://gist.github.com/pooyagolchian/520ee77f22836d92b483f3f8827f8767&quot; target=&quot;_blank&quot; rel=&quot;nofollow&quot;&gt;Poor Man’s vpn bash script&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;bash&quot;&gt;&lt;pre class=&quot;language-bash&quot;&gt;&lt;code class=&quot;language-bash&quot;&gt;&lt;span class=&quot;token shebang important&quot;&gt;#!/bin/sh&lt;/span&gt;
+&lt;span class=&quot;token assign-left variable&quot;&gt;NET_SERVICE&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;Wi-Fi&quot;&lt;/span&gt;
+&lt;span class=&quot;token assign-left variable&quot;&gt;PORT&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token number&quot;&gt;1080&lt;/span&gt;
+&lt;span class=&quot;token assign-left variable&quot;&gt;SERVER&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;admin@server1.example.com
+&lt;span class=&quot;token assign-left variable&quot;&gt;PID&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token variable&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;pgrep -f $&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;PORT&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;&lt;span class=&quot;token environment constant&quot;&gt;$EUID&lt;/span&gt;&quot;&lt;/span&gt; -ne &lt;span class=&quot;token number&quot;&gt;0&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;then&lt;/span&gt; &lt;span class=&quot;token builtin class-name&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Please run as root!&quot;&lt;/span&gt;
+  &lt;span class=&quot;token builtin class-name&quot;&gt;exit&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;fi&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; pgrep -f &lt;span class=&quot;token variable&quot;&gt;${PORT}&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;/dev/null
+&lt;span class=&quot;token keyword&quot;&gt;then&lt;/span&gt;
+&lt;span class=&quot;token builtin class-name&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;WELCOME TO POOR MAN&apos;S VPN&quot;&lt;/span&gt;
+&lt;span class=&quot;token builtin class-name&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Ssh process in running with pid&quot;&lt;/span&gt; &lt;span class=&quot;token variable&quot;&gt;$PID&lt;/span&gt;
+&lt;span class=&quot;token function&quot;&gt;kill&lt;/span&gt; -9 &lt;span class=&quot;token variable&quot;&gt;$PID&lt;/span&gt;
+&lt;span class=&quot;token builtin class-name&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Kill ssh process with PID&quot;&lt;/span&gt; &lt;span class=&quot;token variable&quot;&gt;$PID&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;else&lt;/span&gt;
+&lt;span class=&quot;token builtin class-name&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Ssh process not found&quot;&lt;/span&gt;
+&lt;span class=&quot;token keyword&quot;&gt;fi&lt;/span&gt;
+&lt;span class=&quot;token function&quot;&gt;ssh&lt;/span&gt; -D &lt;span class=&quot;token variable&quot;&gt;${PORT}&lt;/span&gt; -f -C -q -N &lt;span class=&quot;token variable&quot;&gt;${SERVER}&lt;/span&gt;
+&lt;span class=&quot;token builtin class-name&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Connect to server&quot;&lt;/span&gt;
+networksetup -setsocksfirewallproxy &lt;span class=&quot;token variable&quot;&gt;${NET_SERVICE}&lt;/span&gt; &lt;span class=&quot;token number&quot;&gt;127.0&lt;/span&gt;.0.1 &lt;span class=&quot;token variable&quot;&gt;${PORT}&lt;/span&gt;
+networksetup -setsocksfirewallproxystate &lt;span class=&quot;token variable&quot;&gt;${NET_SERVICE}&lt;/span&gt; on
+&lt;span class=&quot;token assign-left variable&quot;&gt;PID&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token variable&quot;&gt;&lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;pgrep -f $&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;PORT&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token variable&quot;&gt;`&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;token builtin class-name&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Ssh runs on PORT &quot;&lt;/span&gt;&lt;span class=&quot;token variable&quot;&gt;${PORT}&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot; and PID &quot;&lt;/span&gt;&lt;span class=&quot;token variable&quot;&gt;${PID}&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;. socks proxy set on Wi-Fi&quot;&lt;/span&gt;
+&lt;span class=&quot;token builtin class-name&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;For turn off socks5 proxy run command -&gt; sudo kill -9 &quot;&lt;/span&gt;&lt;span class=&quot;token variable&quot;&gt;${PID}&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;; networksetup -setsocksfirewallproxystate &quot;&lt;/span&gt;&lt;span class=&quot;token variable&quot;&gt;${NET_SERVICE}&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot; off&quot;&lt;/span&gt;
+&lt;span class=&quot;token builtin class-name&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Change proxychain4 socks5 port sudo sed &apos;s/foor/bar/g&apos; /etc/proxychains.conf&quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;Configure The Poor Man’s VPN (Tunnel over SSH) on Windows 7,10&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;Install &lt;a href=&quot;https://www.bitvise.com/ssh-client-download&quot; target=&quot;_blank&quot; rel=&quot;nofollow&quot;&gt;Bitvise&lt;/a&gt; and &lt;a href=&quot;http://www.mediafire.com/file/6fm9v97vnw6qj9y/ProxifierPE.zip/file&quot; target=&quot;_blank&quot; rel=&quot;nofollow&quot;&gt;Proxifier&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Follow image to install and configuration the SSH tunnel on the Windows&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/dfe500cf98d12af478e42e5d07d76cc5/3bbe7/1.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block;  max-width: 533px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 105.40540540540542%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAAVABQDASIAAhEBAxEB/8QAGQABAQEAAwAAAAAAAAAAAAAAAAEDAgQF/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEAMQAAAB9G6U4Nh1aFB//8QAGxAAAgIDAQAAAAAAAAAAAAAAAAIBEhETICH/2gAIAQEAAQUCqpVTWnET5ksf/8QAFhEAAwAAAAAAAAAAAAAAAAAAABAR/9oACAEDAQE/ASv/xAAUEQEAAAAAAAAAAAAAAAAAAAAg/9oACAECAQE/AR//xAAYEAEBAAMAAAAAAAAAAAAAAAAAMQEgMv/aAAgBAQAGPwKOUYTX/8QAGhAAAwEBAQEAAAAAAAAAAAAAAAEhETFBYf/aAAgBAQABPyFYqSvBpUosyNgmsqmrwgfwl8Gx/9oADAMBAAIAAwAAABDDEAD/xAAXEQADAQAAAAAAAAAAAAAAAAAAEBFR/9oACAEDAQE/ECtf/8QAFhEAAwAAAAAAAAAAAAAAAAAAESAh/9oACAECAQE/EDU//8QAHRABAQEAAgMBAQAAAAAAAAAAAREAIUExUXFh4f/aAAgBAQABPxA9GQOt1g+GlEx9mQgRN+zE8g9X+awQBPGgC2O/zEhyvt3A43//2Q==&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;Bitvise&quot;
+        title=&quot;&quot;
+        src=&quot;/static/dfe500cf98d12af478e42e5d07d76cc5/3bbe7/1.jpg&quot;
+        srcset=&quot;/static/dfe500cf98d12af478e42e5d07d76cc5/a80bd/1.jpg 148w,
+/static/dfe500cf98d12af478e42e5d07d76cc5/1c91a/1.jpg 295w,
+/static/dfe500cf98d12af478e42e5d07d76cc5/3bbe7/1.jpg 533w&quot;
+        sizes=&quot;(max-width: 533px) 100vw, 533px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/7f32984e570be9c9755d0d350fd5221d/a92c5/2.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block;  max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 77.70270270270271%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAAQABQDASIAAhEBAxEB/8QAGAAAAgMAAAAAAAAAAAAAAAAAAAECAwX/xAAVAQEBAAAAAAAAAAAAAAAAAAAAAf/aAAwDAQACEAMQAAAB13W0ZEX/xAAXEAEBAQEAAAAAAAAAAAAAAAACAQAT/9oACAEBAAEFAoDZzOoOq0er3//EABQRAQAAAAAAAAAAAAAAAAAAABD/2gAIAQMBAT8BP//EABQRAQAAAAAAAAAAAAAAAAAAABD/2gAIAQIBAT8BP//EABYQAQEBAAAAAAAAAAAAAAAAADEAIP/aAAgBAQAGPwIiMf/EABoQAAICAwAAAAAAAAAAAAAAAAABEBEhMUH/2gAIAQEAAT8hhEpPUTeChcFWf//aAAwDAQACAAMAAAAQjA//xAAWEQADAAAAAAAAAAAAAAAAAAABEBH/2gAIAQMBAT8QgX//xAAVEQEBAAAAAAAAAAAAAAAAAAAQEf/aAAgBAgEBPxCn/8QAGhABAAMBAQEAAAAAAAAAAAAAAQARITFBcf/aAAgBAQABPxAQp96VE0owsdS9hKK8i6I+kULpzyf/2Q==&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;Bitvise&quot;
+        title=&quot;&quot;
+        src=&quot;/static/7f32984e570be9c9755d0d350fd5221d/1c72d/2.jpg&quot;
+        srcset=&quot;/static/7f32984e570be9c9755d0d350fd5221d/a80bd/2.jpg 148w,
+/static/7f32984e570be9c9755d0d350fd5221d/1c91a/2.jpg 295w,
+/static/7f32984e570be9c9755d0d350fd5221d/1c72d/2.jpg 590w,
+/static/7f32984e570be9c9755d0d350fd5221d/a92c5/2.jpg 883w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/68c7b7b5a1c8a94cbbdb2f3e46328413/72f09/3.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block;  max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 77.02702702702703%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAAPABQDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAgAF/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAH/2gAMAwEAAhADEAAAAdZCRRl//8QAGhAAAgIDAAAAAAAAAAAAAAAAABIBAhETIf/aAAgBAQABBQJIxrqJUfjQOf/EABQRAQAAAAAAAAAAAAAAAAAAABD/2gAIAQMBAT8BP//EABQRAQAAAAAAAAAAAAAAAAAAABD/2gAIAQIBAT8BP//EABYQAQEBAAAAAAAAAAAAAAAAADEAIP/aAAgBAQAGPwIiMf/EABoQAQEAAgMAAAAAAAAAAAAAAAEAEVEhQWH/2gAIAQEAAT8hMbheCdeAjOoDqTf/2gAMAwEAAgADAAAAEJfP/8QAFhEAAwAAAAAAAAAAAAAAAAAAARAR/9oACAEDAQE/EIF//8QAFhEAAwAAAAAAAAAAAAAAAAAAARAR/9oACAECAQE/EKV//8QAHRABAAICAgMAAAAAAAAAAAAAAQARITFBUWGhsf/aAAgBAQABPxBTKrnXFQxp5iHTbXMC+g9TTAe5aK+T/9k=&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;Bitvise&quot;
+        title=&quot;&quot;
+        src=&quot;/static/68c7b7b5a1c8a94cbbdb2f3e46328413/1c72d/3.jpg&quot;
+        srcset=&quot;/static/68c7b7b5a1c8a94cbbdb2f3e46328413/a80bd/3.jpg 148w,
+/static/68c7b7b5a1c8a94cbbdb2f3e46328413/1c91a/3.jpg 295w,
+/static/68c7b7b5a1c8a94cbbdb2f3e46328413/1c72d/3.jpg 590w,
+/static/68c7b7b5a1c8a94cbbdb2f3e46328413/a8a14/3.jpg 885w,
+/static/68c7b7b5a1c8a94cbbdb2f3e46328413/72f09/3.jpg 886w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/174d4a0822ee5dad229b96fbe412ca24/72f09/4.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block;  max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 77.70270270270271%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAAQABQDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAEF/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAH/2gAMAwEAAhADEAAAAdewgL//xAAZEAADAQEBAAAAAAAAAAAAAAAAAQITERL/2gAIAQEAAQUCzRlJnI6R1Hs//8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAwEBPwE//8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAgEBPwE//8QAFhABAQEAAAAAAAAAAAAAAAAAMQAg/9oACAEBAAY/AiIx/8QAGhABAQACAwAAAAAAAAAAAAAAAQAQUTGB8f/aAAgBAQABPyHeOsJ05DzBeyL/2gAMAwEAAgADAAAAEO/P/8QAFhEAAwAAAAAAAAAAAAAAAAAAARAR/9oACAEDAQE/EIF//8QAFhEAAwAAAAAAAAAAAAAAAAAAARAR/9oACAECAQE/EKV//8QAGxAAAgIDAQAAAAAAAAAAAAAAAAERITFhsZH/2gAIAQEAAT8QsSazPAoFXdi76DVPhlsm5E1YP//Z&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;Bitvise&quot;
+        title=&quot;&quot;
+        src=&quot;/static/174d4a0822ee5dad229b96fbe412ca24/1c72d/4.jpg&quot;
+        srcset=&quot;/static/174d4a0822ee5dad229b96fbe412ca24/a80bd/4.jpg 148w,
+/static/174d4a0822ee5dad229b96fbe412ca24/1c91a/4.jpg 295w,
+/static/174d4a0822ee5dad229b96fbe412ca24/1c72d/4.jpg 590w,
+/static/174d4a0822ee5dad229b96fbe412ca24/a8a14/4.jpg 885w,
+/static/174d4a0822ee5dad229b96fbe412ca24/72f09/4.jpg 886w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/70435508dcbbf7c4ddd3155bed26c76a/ffd31/1.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block;  max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 44.5945945945946%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAAJABQDASIAAhEBAxEB/8QAGAAAAgMAAAAAAAAAAAAAAAAAAAMBAgX/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIQAxAAAAHZsiRgoP/EABgQAAMBAQAAAAAAAAAAAAAAAAABAhAR/9oACAEBAAEFAkpOSOULf//EABQRAQAAAAAAAAAAAAAAAAAAABD/2gAIAQMBAT8BP//EABQRAQAAAAAAAAAAAAAAAAAAABD/2gAIAQIBAT8BP//EABYQAQEBAAAAAAAAAAAAAAAAADEAIP/aAAgBAQAGPwIiMf/EABkQAAEFAAAAAAAAAAAAAAAAABAAARExUf/aAAgBAQABPyGEw3CVT//aAAwDAQACAAMAAAAQI8//xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAEDAQE/ED//xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAECAQE/ED//xAAbEAADAAIDAAAAAAAAAAAAAAAAATERUSFhcf/aAAgBAQABPxCexci1DJWroj4h1jp//9k=&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;Proxyfier&quot;
+        title=&quot;&quot;
+        src=&quot;/static/70435508dcbbf7c4ddd3155bed26c76a/1c72d/1.jpg&quot;
+        srcset=&quot;/static/70435508dcbbf7c4ddd3155bed26c76a/a80bd/1.jpg 148w,
+/static/70435508dcbbf7c4ddd3155bed26c76a/1c91a/1.jpg 295w,
+/static/70435508dcbbf7c4ddd3155bed26c76a/1c72d/1.jpg 590w,
+/static/70435508dcbbf7c4ddd3155bed26c76a/a8a14/1.jpg 885w,
+/static/70435508dcbbf7c4ddd3155bed26c76a/fbd2c/1.jpg 1180w,
+/static/70435508dcbbf7c4ddd3155bed26c76a/ffd31/1.jpg 1318w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/3fdf1ba8d8c43e6d1eb59a07567ac189/84b3e/2.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block;  max-width: 514px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 96.62162162162163%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAATABQDASIAAhEBAxEB/8QAGAABAAMBAAAAAAAAAAAAAAAAAAECAwX/xAAVAQEBAAAAAAAAAAAAAAAAAAAAAf/aAAwDAQACEAMQAAAB6l7WjForCQgH/8QAGxAAAwACAwAAAAAAAAAAAAAAAAECAxETITH/2gAIAQEAAQUCUyccjxyLwYn1s2f/xAAWEQADAAAAAAAAAAAAAAAAAAAAEBH/2gAIAQMBAT8BK//EABQRAQAAAAAAAAAAAAAAAAAAACD/2gAIAQIBAT8BH//EABcQAAMBAAAAAAAAAAAAAAAAAAABMiD/2gAIAQEABj8CklErf//EABwQAAICAgMAAAAAAAAAAAAAAAARASFBURAxkf/aAAgBAQABPyGlE4a4RkFS8DOxJ4GcWNs//9oADAMBAAIAAwAAABBYEAD/xAAXEQADAQAAAAAAAAAAAAAAAAAAEBFR/9oACAEDAQE/ECtf/8QAFxEBAAMAAAAAAAAAAAAAAAAAAAEQEf/aAAgBAgEBPxBia//EAB4QAQACAgIDAQAAAAAAAAAAAAEAESExQVFhgbHB/9oACAEBAAE/EGgCobyNTpD1A/gjC9GL8QDyRlM8Shzo/IV2iRUFtP/Z&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;Proxyfier&quot;
+        title=&quot;&quot;
+        src=&quot;/static/3fdf1ba8d8c43e6d1eb59a07567ac189/84b3e/2.jpg&quot;
+        srcset=&quot;/static/3fdf1ba8d8c43e6d1eb59a07567ac189/a80bd/2.jpg 148w,
+/static/3fdf1ba8d8c43e6d1eb59a07567ac189/1c91a/2.jpg 295w,
+/static/3fdf1ba8d8c43e6d1eb59a07567ac189/84b3e/2.jpg 514w&quot;
+        sizes=&quot;(max-width: 514px) 100vw, 514px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/8e8d4e19cadc0b538fd0f191deea25f6/79a4e/3.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block;  max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 52.02702702702703%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAAKABQDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAAAAIDBf/EABUBAQEAAAAAAAAAAAAAAAAAAAEA/9oADAMBAAIQAxAAAAHq3jYEp//EABgQAQEBAQEAAAAAAAAAAAAAAAABAhJB/9oACAEBAAEFAplyuY8V/8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAwEBPwE//8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAgEBPwE//8QAGBAAAwEBAAAAAAAAAAAAAAAAAAExAiD/2gAIAQEABj8CiJki4//EABsQAQACAgMAAAAAAAAAAAAAAAEAESExQZHR/9oACAEBAAE/IQonV8oJz0wXlFa2xN7n/9oADAMBAAIAAwAAABC8L//EABYRAQEBAAAAAAAAAAAAAAAAAAARIf/aAAgBAwEBPxCNf//EABURAQEAAAAAAAAAAAAAAAAAAAAR/9oACAECAQE/EIj/xAAbEAEAAwADAQAAAAAAAAAAAAABABEhMUGBsf/aAAgBAQABPxDAJZekqZCSL9QIIjjuW30iNJ9n/9k=&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;Proxyfier&quot;
+        title=&quot;&quot;
+        src=&quot;/static/8e8d4e19cadc0b538fd0f191deea25f6/1c72d/3.jpg&quot;
+        srcset=&quot;/static/8e8d4e19cadc0b538fd0f191deea25f6/a80bd/3.jpg 148w,
+/static/8e8d4e19cadc0b538fd0f191deea25f6/1c91a/3.jpg 295w,
+/static/8e8d4e19cadc0b538fd0f191deea25f6/1c72d/3.jpg 590w,
+/static/8e8d4e19cadc0b538fd0f191deea25f6/79a4e/3.jpg 856w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/846ed019716e42fd9c3dcd71b7bdf76f/ffd31/4.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block;  max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 44.5945945945946%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAAJABQDASIAAhEBAxEB/8QAFwABAQEBAAAAAAAAAAAAAAAAAAMCBf/EABQBAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhADEAAAAezqIokP/8QAGBAAAwEBAAAAAAAAAAAAAAAAAAECEBL/2gAIAQEAAQUCUycyOULf/8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAwEBPwE//8QAFBEBAAAAAAAAAAAAAAAAAAAAEP/aAAgBAgEBPwE//8QAFhABAQEAAAAAAAAAAAAAAAAAMQAg/9oACAEBAAY/AiIx/8QAGBAAAwEBAAAAAAAAAAAAAAAAABARMQH/2gAIAQEAAT8hgU04MLp//9oADAMBAAIAAwAAABAwz//EABQRAQAAAAAAAAAAAAAAAAAAABD/2gAIAQMBAT8QP//EABQRAQAAAAAAAAAAAAAAAAAAABD/2gAIAQIBAT8QP//EABsQAAICAwEAAAAAAAAAAAAAAAAxAREhUWFx/9oACAEBAAE/EKJcEaBVUrgnwljn/9k=&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;Proxyfier&quot;
+        title=&quot;&quot;
+        src=&quot;/static/846ed019716e42fd9c3dcd71b7bdf76f/1c72d/4.jpg&quot;
+        srcset=&quot;/static/846ed019716e42fd9c3dcd71b7bdf76f/a80bd/4.jpg 148w,
+/static/846ed019716e42fd9c3dcd71b7bdf76f/1c91a/4.jpg 295w,
+/static/846ed019716e42fd9c3dcd71b7bdf76f/1c72d/4.jpg 590w,
+/static/846ed019716e42fd9c3dcd71b7bdf76f/a8a14/4.jpg 885w,
+/static/846ed019716e42fd9c3dcd71b7bdf76f/fbd2c/4.jpg 1180w,
+/static/846ed019716e42fd9c3dcd71b7bdf76f/ffd31/4.jpg 1318w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/04eab2a01fb58f6f3fe729ea833dc735/d7ad1/5.jpg&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block;  max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 45.94594594594595%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/jpeg;base64,/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wgARCAAJABQDASIAAhEBAxEB/8QAGAAAAgMAAAAAAAAAAAAAAAAAAAMBAgX/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIQAxAAAAHaEyWEh//EABkQAAIDAQAAAAAAAAAAAAAAAAABAhARIv/aAAgBAQABBQLkyJJLVTP/xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAEDAQE/AT//xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAECAQE/AT//xAAXEAADAQAAAAAAAAAAAAAAAAABECAx/9oACAEBAAY/Algj/8QAGhAAAwEAAwAAAAAAAAAAAAAAAAExkRARYf/aAAgBAQABPyFLrFh5rCNgRxZ//9oADAMBAAIAAwAAABBQz//EABURAQEAAAAAAAAAAAAAAAAAAAAR/9oACAEDAQE/EFf/xAAUEQEAAAAAAAAAAAAAAAAAAAAQ/9oACAECAQE/ED//xAAbEAACAwADAAAAAAAAAAAAAAABEQAhMRBRYf/aAAgBAQABPxBeL1DAgL3UQUF0mHL/AP/Z&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;Proxyfier&quot;
+        title=&quot;&quot;
+        src=&quot;/static/04eab2a01fb58f6f3fe729ea833dc735/1c72d/5.jpg&quot;
+        srcset=&quot;/static/04eab2a01fb58f6f3fe729ea833dc735/a80bd/5.jpg 148w,
+/static/04eab2a01fb58f6f3fe729ea833dc735/1c91a/5.jpg 295w,
+/static/04eab2a01fb58f6f3fe729ea833dc735/1c72d/5.jpg 590w,
+/static/04eab2a01fb58f6f3fe729ea833dc735/a8a14/5.jpg 885w,
+/static/04eab2a01fb58f6f3fe729ea833dc735/d7ad1/5.jpg 1001w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;</content:encoded></item><item><title><![CDATA[Configure Firebase Cloud Messaging (FCM)]]></title><description><![CDATA[Configuration firebase push notification with CDN At first, you add a CDN script in the HTML file. I’m using this library in my vue.js…]]></description><link>http://pooyagolchian.ir/configure-fcm/</link><guid isPermaLink="false">http://pooyagolchian.ir/configure-fcm/</guid><pubDate>Sat, 25 Apr 2020 00:00:00 GMT</pubDate><content:encoded>&lt;h3&gt;Configuration firebase push notification with CDN&lt;/h3&gt;
+&lt;p&gt;At first, you add a CDN script in the HTML file. I’m using this library in my vue.js application on the Yiata website.
+This website configures with Webpack and dotnet core 2.2.&lt;/p&gt;
+&lt;h3&gt;Step-1-Add CDN&lt;/h3&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;html&quot;&gt;&lt;pre class=&quot;language-html&quot;&gt;&lt;code class=&quot;language-html&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;script&lt;/span&gt; &lt;span class=&quot;token attr-name&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;token attr-value&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token script&quot;&gt;&lt;/span&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;/&lt;/span&gt;script&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;script&lt;/span&gt; &lt;span class=&quot;token attr-name&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;token attr-value&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;https://www.gstatic.com/firebasejs/7.14.1/firebase-messaging.js&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token script&quot;&gt;&lt;/span&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;/&lt;/span&gt;script&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;
+&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;&lt;/span&gt;script&lt;/span&gt; &lt;span class=&quot;token attr-name&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;token attr-value&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;https://www.gstatic.com/firebasejs/7.14.1/firebase-analytics.js&lt;span class=&quot;token punctuation&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token script&quot;&gt;&lt;/span&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token tag&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;&amp;lt;/&lt;/span&gt;script&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2&gt;Step-2-Config script&lt;/h2&gt;
+&lt;p&gt;After adding this script at the end of body tags you are adding the firebase configs like below:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;javascript&quot;&gt;&lt;pre class=&quot;language-javascript&quot;&gt;&lt;code class=&quot;language-javascript&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; firebaseConfig &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+              apiKey&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token constant&quot;&gt;YOUR_API_KEY&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+              authDomain&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token constant&quot;&gt;YOUR_AUTH_DOMAIN&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+              databaseURL&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token constant&quot;&gt;YOUR_DATABASE_URL&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+              projectId&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token constant&quot;&gt;YOUR_PROJECT_ID&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+              storageBucket&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token constant&quot;&gt;YOUR_STORAGE_BUCKET&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+              messagingSenderId&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; YOUR_messagingSenderId&quot;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+              appId&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token constant&quot;&gt;YOUR_APP_ID&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+              measurementId&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; YOURE_measurementId
+            &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+            firebase&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;initializeApp&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;firebaseConfig&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+            firebase&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;analytics&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+            &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; messaging &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; firebase&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;messaging&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+            messaging&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;requestPermission&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;then&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+                console&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;Have Permission&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+                &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; messaging&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;getToken&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+              &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+              &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;then&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;token&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+                console&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;token&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; token&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+              &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+              &lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;catch&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+                console&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;Have not Permisstion&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; err&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+              &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+            console&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;messaging&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; messaging&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+            messaging&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;onMessage&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;payload&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+              console&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&apos;Message received. &apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; payload&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+              localStorage&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;setItem&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;payload&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;collapse_key&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token constant&quot;&gt;JSON&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;stringify&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;payload&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;notification&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+            &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;Step-3-Add firebase service worker&lt;/h3&gt;
+&lt;p&gt;For initial firebase configuration and connect to this service, You must add service worker js file in the root of your project.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;javascript&quot;&gt;&lt;pre class=&quot;language-javascript&quot;&gt;&lt;code class=&quot;language-javascript&quot;&gt;&lt;span class=&quot;token function&quot;&gt;importScripts&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token function&quot;&gt;importScripts&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token string&quot;&gt;&quot;https://www.gstatic.com/firebasejs/7.14.1/firebase-messaging.js&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+firebase&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;initializeApp&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+              apiKey&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token constant&quot;&gt;YOUR_API_KEY&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+              authDomain&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token constant&quot;&gt;YOUR_AUTH_DOMAIN&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+              databaseURL&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token constant&quot;&gt;YOUR_DATABASE_URL&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+              projectId&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token constant&quot;&gt;YOUR_PROJECT_ID&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+              storageBucket&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token constant&quot;&gt;YOUR_STORAGE_BUCKET&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+              messagingSenderId&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; YOUR_messagingSenderId&quot;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+              appId&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token constant&quot;&gt;YOUR_APP_ID&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+              measurementId&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; YOURE_measurementId
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; messaging &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; firebase&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;messaging&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+messaging&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;setBackgroundMessageHandler&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;payload&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  console&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;token string&quot;&gt;&quot;[firebase-messaging-sw.js] Received background message &quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    payload
+  &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; notificationTitle &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Background Message Title&quot;&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; notificationOptions &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    body&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Background Message body.&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    icon&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;/firebase-logo.png&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+
+  &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; self&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;registration&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;showNotification&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+    notificationTitle&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    notificationOptions
+  &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;Step-4-Add manifest json file&lt;/h3&gt;
+&lt;p&gt;At the last step, You must be added SENDER_ID to manifest.json file&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;javascript&quot;&gt;&lt;pre class=&quot;language-javascript&quot;&gt;&lt;code class=&quot;language-javascript&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;token string&quot;&gt;&quot;gcm_sender_id&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;GCM_SENDER_ID&apos;&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3&gt;Step-5-Use localStrorage to save notifications&lt;/h3&gt;
+&lt;p&gt;Now you can read the local storage with getItem method to get nofications from local storage. You can set expiration date for your local storage (for example: 1 month)&lt;/p&gt;</content:encoded></item><item><title><![CDATA[Host Your Jekyll Theme on GitHub With CloudFlare]]></title><description><![CDATA[Create a CNAME file and upload it to your gh-pages repository. To do this, open your favourite text editor and type yout custom domain. Go…]]></description><link>http://pooyagolchian.ir/host-jekyll-theme-on-github/</link><guid isPermaLink="false">http://pooyagolchian.ir/host-jekyll-theme-on-github/</guid><pubDate>Fri, 01 Jul 2016 00:00:00 GMT</pubDate><content:encoded>&lt;ol&gt;
+&lt;li&gt;Create a CNAME file and upload it to your gh-pages repository.&lt;/li&gt;
+&lt;li&gt;To do this, open your favourite text editor and type yout custom domain.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;www.pooyagolchian.ir&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;ol start=&quot;3&quot;&gt;
+&lt;li&gt;Go to your &lt;a href=&quot;https://www.cloudflare.com/&quot; target=&quot;_blank&quot; rel=&quot;nofollow&quot;&gt;CloudFlare account&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Follow like this image with your repo link, For example: pooya-golchian.github.io&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;
+  &lt;a
+    class=&quot;gatsby-resp-image-link&quot;
+    href=&quot;/static/3a7e089c2b0649f4a51f544b2914dc1f/8c557/cloud-flare.png&quot;
+    style=&quot;display: block&quot;
+    target=&quot;_blank&quot;
+    rel=&quot;noopener&quot;
+  &gt;
+  
+  &lt;span
+    class=&quot;gatsby-resp-image-wrapper&quot;
+    style=&quot;position: relative; display: block;  max-width: 590px; margin-left: auto; margin-right: auto;&quot;
+  &gt;
+    &lt;span
+      class=&quot;gatsby-resp-image-background-image&quot;
+      style=&quot;padding-bottom: 41.891891891891895%; position: relative; bottom: 0; left: 0; background-image: url(&apos;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAICAIAAAB2/0i6AAAACXBIWXMAAAsSAAALEgHS3X78AAABI0lEQVQY001RW26EMBDL9XuKXqUHqFS1H/0BJGCBLdUSCMkkk4RHHdhK+ANNTOzxTAQRmQPe++WCEEKM8crgGIIH56MllpYn4Zw79eECGBmjDdGV1PM8yMFRaOTHW/byXr+KLMvqqs6zrDnQtm1ZlkVRoGguqOsafNd1eY6f+a2pqqoUSin0SZbOnj2ddfM8T0pZ+2QSyU5KaQylA5L7ACNhibZtk3JU04Sp9n3HFzJtDCww93YAM4/j6JhxIXSfkW3f/wqlDW7DdXg8MD9qdowVaK3RnJnP5aGAmI4stvtm0vf7j4hGLsETWexyWVYg6ZmtJeixS6Q4t34s1W/rGrqvyNT3vdi9XoPHu+z/QEjo05xP2HVNydO7uBCXzY8tXBD5D89oyHbiX+/SAAAAAElFTkSuQmCC&apos;); background-size: cover; display: block;&quot;
+    &gt;
+      &lt;img
+        class=&quot;gatsby-resp-image-image&quot;
+        style=&quot;width: 100%; height: 100%; margin: 0; vertical-align: middle; position: absolute; top: 0; left: 0; box-shadow: inset 0px 0px 0px 400px white;&quot;
+        alt=&quot;Cloudflare&quot;
+        title=&quot;&quot;
+        src=&quot;/static/3a7e089c2b0649f4a51f544b2914dc1f/fcda8/cloud-flare.png&quot;
+        srcset=&quot;/static/3a7e089c2b0649f4a51f544b2914dc1f/12f09/cloud-flare.png 148w,
+/static/3a7e089c2b0649f4a51f544b2914dc1f/e4a3f/cloud-flare.png 295w,
+/static/3a7e089c2b0649f4a51f544b2914dc1f/fcda8/cloud-flare.png 590w,
+/static/3a7e089c2b0649f4a51f544b2914dc1f/8c557/cloud-flare.png 700w&quot;
+        sizes=&quot;(max-width: 590px) 100vw, 590px&quot;
+      /&gt;
+    &lt;/span&gt;
+  &lt;/span&gt;
+  
+  &lt;/a&gt;
+    &lt;/p&gt;
+&lt;p&gt;Github IP adress:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;text&quot;&gt;&lt;pre class=&quot;language-text&quot;&gt;&lt;code class=&quot;language-text&quot;&gt;192.30.252.153
+192.30.252.154&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;&lt;em&gt;CHEERS, your website hosted on GitHub :)&lt;/em&gt;&lt;/p&gt;</content:encoded></item></channel></rss>
