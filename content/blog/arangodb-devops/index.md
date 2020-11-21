@@ -5,18 +5,18 @@ date: "2020-07-22"
 
 ### Intro
 
-I'm using Shell script for all steps to automated Arangodb DevOps from a to z :)
+I use Shell script for all steps to automate Arangodb backup and update from a to z!
 
 ### Install last verison of Arangodb on Ubuntu 18.04
 
-For installation you should be visit Arango website for check lasversion of this database.
+For installation, you should visit the Arango website to check the last version of this database.
 Now the last version is `3.6.5-1`.
-For installing this version and configuration web interface run below sh file on your server,
-in this example I'm testing this script on AWS EC2 server.
+For installing this version and configuration web interface run the below sh file on your server,
+in this example, I'm testing this script on the AWS EC2 server.
 
 #### WARNING!
 
-You should stop arangodb3 and turn your application in maintenance mode!
+You should stop arangodb3 and turn your application into maintenance mode!
 
 ```bash
 #!/bin/bash
@@ -88,11 +88,11 @@ rm -rf  /home/ubuntu/backup/$DIRNAME/*
 
 ### Add systemd service for life!
 
-It's really good feature to automated task with systemd service to manage all services separately.
+It's a really good feature to automated tasks with system service to manage all services separately.
 
 1- First you go to `/etc/systemd/system` and add `backup.servive` and `backup.timer`
-2- Backup service file for run backup script
-3- Timer for run backup script and specific time.
+2- Backup service file for the run backup script
+3- Timer for the run backup script and specific time.
 
 ```bash
 [Unit]
@@ -112,7 +112,7 @@ Description=Run sportbook  Arango DB backup script [Service]
 ExecStart=/bin/bash /home/ubuntu/backup/backup.sh
 ```
 
-After create this two files in systemd you must be restart the service like below:
+After creating these two files in the system you must restart the service like below:
 
 ```
 sudo systemctl daemon-reload
@@ -121,4 +121,4 @@ sudo systemctl status backup.time
 
 ```
 
-Now you have automatice backup system with timer on your server.
+Now you have an automatice backup system with a timer on your server.
