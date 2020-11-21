@@ -1,5 +1,5 @@
 ---
-title: Arangodb install last version and configuration and backup and restore from amazon AWS
+title: Arangodb install last version and configuration and backup and restore from Amazon AWS
 date: "2020-07-22"
 ---
 
@@ -121,4 +121,4 @@ sudo systemctl status backup.time
 
 ```
 
-Now you have an automatice backup system with a timer on your server.
+Now you have an automatic backup system with a timer on your server.
