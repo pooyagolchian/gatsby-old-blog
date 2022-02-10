@@ -30,7 +30,7 @@
     "gatsby-theme-overreacted-toggle": "^1.0.2",
     "gatsby-transformer-remark": "^2.6.10",
     "gatsby-transformer-sharp": "^2.2.5",
-    "node-sass": "^4.14.0",
+    "node-sass": "^7.0.0",
     "prism-themes": "^1.4.0",
     "prismjs": "^1.17.1",
     "react": "^16.8.6",
